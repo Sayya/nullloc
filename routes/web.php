@@ -17,11 +17,11 @@ Route::get('/', function () {
 });
 */
 
-Route::get ('/',     'PostController@index')->middleware('auth');
-Route::post('/save', 'PostController@save')->middleware('auth');
-Route::post('/locus',      'LocusController@input')->middleware('auth');
-Route::post('/locus/save', 'LocusController@save')->middleware('auth');
-Route::get ('/locus/{id}', 'LocusController@index')->middleware('auth');
+Route::get ('/',                'PostController@index')->middleware('auth');
+Route::post('/save/{note_id?}', 'PostController@save')->middleware('auth');
+Route::get ('/{post_id}/note',           'NoteController@index')->middleware('auth');
+Route::post('/{post_id}/note/save',      'NoteController@save')->middleware('auth');
+Route::get ('/{post_id}/note/{note_id}', 'NoteController@open')->middleware('auth');
 
 /*
 Route::delete('/post/{id}', function ($id) {

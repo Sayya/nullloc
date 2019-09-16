@@ -14,7 +14,7 @@ class ChangeNotesTable extends Migration
     public function up()
     {
         Schema::table('notes', function (Blueprint $table) {
-            $table->foreign('locus_id')->references('id')->on('locuses');
+            $table->foreign('post_id')->references('id')->on('posts');
             $table->foreign('created_user_id')->references('id')->on('users');
             $table->foreign('updated_user_id')->references('id')->on('users');
         });
@@ -29,7 +29,7 @@ class ChangeNotesTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
         Schema::table('notes', function (Blueprint $table) {
-            $table->dropForeign('notes_locus_id_foreign');
+            $table->dropForeign('notes_post_id_foreign');
             $table->dropForeign('notes_created_user_id_foreign');
             $table->dropForeign('notes_updated_user_id_foreign');
         });

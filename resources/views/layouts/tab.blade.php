@@ -5,8 +5,8 @@
   <div class="row justify-content-center">
     <ul class="nav nav-tabs">
       <li class="nav-item"><a href="#tab1" class="nav-link active" data-toggle="tab">POST</a></li>
-      <li class="nav-item"><a href="#tab2" class="nav-link" data-toggle="tab">DISCUS</a></li>
-      <li class="nav-item"><a href="#tab3" class="nav-link" data-toggle="tab">NOTE</a></li>
+      <li class="nav-item"><a href="#tab2" class="nav-link" data-toggle="tab">NOTE</a></li>
+      <li class="nav-item"><a href="#tab3" class="nav-link" data-toggle="tab">KNOWLG</a></li>
     </ul>
   </div>
   <div class="tab-content">
