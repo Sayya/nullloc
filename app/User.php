@@ -44,4 +44,12 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Post');
     }
+
+    /*
+     * 追加 2019-09-18
+     */
+    public function files()
+    {
+        return $this->hasMany('App\File');
+    }
 }

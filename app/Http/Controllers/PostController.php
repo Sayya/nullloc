@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Note;
+use App\File;
 
 class PostController extends Controller
 {
@@ -32,9 +33,16 @@ class PostController extends Controller
             $note->count = Post::where('posts.note_id', $note->id)->count();
         }
 
-        return view('posts', [
+        $files = File::join('users', 'users.id', '=', 'files.created_user_id')
+            ->select(['files.*', 'users.name'])
+            ->orderBy('files.updated_at', 'desc')
+            ->get();
+
+        return view('board', [
+            'is_search' => false,
             'posts' => $posts,
             'notes' => $notes,
+            'files' => $files,
         ]);
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateThoughtsTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateThoughtsTable extends Migration
      */
     public function up()
     {
-        Schema::create('thoughts', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
-            $table->integer('locus_id')->unsigned();
+        Schema::create('comments', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('content');
             $table->tinyInteger('open_scope')->unsigned()->default();
+            $table->integer('parent_id')->unsigned();
+            $table->integer('post_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +32,6 @@ class CreateThoughtsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('thoughts');
+        Schema::dropIfExists('comments');
     }
 }

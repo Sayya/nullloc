@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeThoughtsTable extends Migration
+class ChangeCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class ChangeThoughtsTable extends Migration
      */
     public function up()
     {
-        Schema::table('thoughts', function (Blueprint $table) {
+        Schema::table('comments', function (Blueprint $table) {
+            $table->foreign('parent_id')->references('id')->on('posts');
+            $table->foreign('post_id')->references('id')->on('posts');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('locus_id')->references('id')->on('locuses');
         });
     }
 
@@ -27,9 +28,10 @@ class ChangeThoughtsTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::table('thoughts', function (Blueprint $table) {
-            $table->dropForeign('thoughts_user_id_foreign');
-            $table->dropForeign('thoughts_locus_id_foreign');
+        Schema::table('comments', function (Blueprint $table) {
+            $table->dropForeign('comments_parent_id_foreign');
+            $table->dropForeign('comments_post_id_foreign');
+            $table->dropForeign('comments_user_id_foreign');
         });
         Schema::enableForeignKeyConstraints();
     }

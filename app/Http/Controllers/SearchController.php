@@ -5,11 +5,49 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Note;
+use App\File;
 
-class NoteController extends Controller
+class SearchController extends Controller
 {
 
-    public function index(Request $request, $post_id)
+    public function search(Request $request)
+    {
+        $posts = Post::join('users', 'users.id', '=', 'posts.user_id')
+            ->select(['posts.*', 'users.name'])
+            ->where('posts.note_id', null)
+            ->orderBy('posts.updated_at', 'desc')
+            ->get();
+
+        foreach ($posts as $post)
+        {
+            $post->count = Note::where('notes.post_id', $post->id)->count();
+        }
+
+        $notes = Note::join('users', 'users.id', '=', 'notes.created_user_id')
+            ->join('posts', 'posts.id', '=', 'notes.post_id')
+            ->select(['notes.*', 'users.name', 'posts.content'])
+            ->orderBy('notes.updated_at', 'desc')
+            ->get();
+
+        foreach ($notes as $note)
+        {
+            $note->count = Post::where('posts.note_id', $note->id)->count();
+        }
+
+        $files = File::join('users', 'users.id', '=', 'files.created_user_id')
+            ->select(['files.*', 'users.name'])
+            ->orderBy('files.updated_at', 'desc')
+            ->get();
+
+        return view('board', [
+            'is_search' => true,
+            'posts' => $posts,
+            'notes' => $notes,
+            'files' => $files,
+        ]);
+    }
+
+    public function note_index(Request $request, $post_id)
     {
         $notes = Note::join('users', 'users.id', '=', 'notes.created_user_id')
             ->select(['notes.*', 'users.name'])
@@ -28,28 +66,13 @@ class NoteController extends Controller
             ->first();
 
         return view('note.board', [
-            'is_search' => false,
+            'is_search' => true,
             'notes' => $notes,
             'post' => $post,
         ]);
     }
 
-    public function save(Request $request, $post_id)
-    {
-        $validator = $request->validate([
-        ]);
-
-        $note = new note;
-        $note->title= $request->title;
-        $note->post_id = $post_id;
-        $note->created_user_id = $request->user()->id;
-        $note->updated_user_id = $request->user()->id;
-        $note->save();
-
-        return redirect('/'.$post_id.'/note');
-    }
-
-    public function open(Request $request, $post_id, $note_id)
+    public function note_open(Request $request, $post_id, $note_id)
     {
         $post = Post::join('users', 'users.id', '=', 'posts.user_id')
             ->select(['posts.*', 'users.name'])
@@ -73,7 +96,7 @@ class NoteController extends Controller
         }
 
         return view('note.open', [
-            'is_search' => false,
+            'is_search' => true,
             'post' => $post,
             'note' => $note,
             'note_posts' => $note_posts,

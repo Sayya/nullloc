@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeLocusesTable extends Migration
+class ChangeFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,7 @@ class ChangeLocusesTable extends Migration
      */
     public function up()
     {
-        Schema::table('locuses', function (Blueprint $table) {
-            $table->foreign('parent_id')->references('id')->on('locuses');
-            $table->foreign('post_id')->references('id')->on('posts');
+        Schema::table('files', function (Blueprint $table) {
             $table->foreign('created_user_id')->references('id')->on('users');
             $table->foreign('updated_user_id')->references('id')->on('users');
         });
@@ -29,11 +27,9 @@ class ChangeLocusesTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::table('locuses', function (Blueprint $table) {
-            $table->dropForeign('locuses_parent_id_foreign');
-            $table->dropForeign('locuses_post_id_foreign');
-            $table->dropForeign('locuses_created_user_id_foreign');
-            $table->dropForeign('locuses_updated_user_id_foreign');
+        Schema::table('files', function (Blueprint $table) {
+            $table->dropForeign('files_created_user_id_foreign');
+            $table->dropForeign('files_updated_user_id_foreign');
         });
         Schema::enableForeignKeyConstraints();
     }

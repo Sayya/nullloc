@@ -4,32 +4,11 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-10">
-      <div class="card">
-        <div class="card-header" data-toggle="collapse" data-target="#makepost" role="button">
-            {{ __('かきこむ') }}
-        </div>
-        <div class="collapse" id="makepost">
-          <div class="card-body">
-            @include('common.errors')
-            <form action="/save/{{ $note->id }}" method="POST" class="form-horizontal">
-              @csrf
-              <div class="form-group">
-                <div class="mx-auto">
-                  <textarea name="content" id="content" class="form-control"></textarea>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-md-8">
-                  <button type="submit" class="btn btn-primary">
-                    {{ __('投稿') }}
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      
+      @if($is_search)
+        @include('file.make_back')
+      @else
+        @include('note.open_make')
+      @endif
       <div class="card">
         <div class="card-header">{{ __('かきこみ一覧') }}</div>
         <div class="card-body">
@@ -45,7 +24,6 @@
               <p>{{ $note->title}}</p>
             </blockquote>
           </div>
-          @if (count($note_posts) > 0)
           <table class="table">
             <colgroup>
               <col style="width: 60%;">
@@ -72,10 +50,14 @@
                   <div>{{ $note_post->updated_at}}</div>
                 </td>
                 <td>
-                  <form action="/" method="GET" class="form-horizontal">
+                  @if($is_search)
+                  <form action="/search/{{ $note_post->id }}/note" method="GET" class="form-horizontal">
+                  @else
+                  <form action="/{{ $note_post->id }}/note" method="GET" class="form-horizontal">
+                  @endif
                     @csrf
                     <div class="form-group">
-                      <button type="submit" class="btn btn-primary">?</button>
+                      <button type="submit" class="btn btn-primary">{{ $note_post->count }}</button>
                     </div>
                   </form>
                 </td>
@@ -85,7 +67,6 @@
           </table>
         </div>
       </div>
-      @endif
     </div>
   </div>
 </div>

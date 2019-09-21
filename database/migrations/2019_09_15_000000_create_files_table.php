@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLocusesTable extends Migration
+class CreateFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateLocusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('locuses', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('content');
-            $table->integer('parent_id')->unsigned()->nullable();
-            $table->integer('post_id')->unsigned();
+            $table->string('title');
             $table->integer('created_user_id')->unsigned();
             $table->integer('updated_user_id')->unsigned();
             $table->timestamps();
@@ -33,6 +30,6 @@ class CreateLocusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('locuses');
+        Schema::dropIfExists('files');
     }
 }
