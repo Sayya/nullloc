@@ -16,9 +16,9 @@ class CreateCommentsTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('content');
-            $table->tinyInteger('open_scope')->unsigned()->default();
-            $table->integer('parent_id')->unsigned();
+            $table->integer('file_id')->unsigned()->nullable();
             $table->integer('post_id')->unsigned();
+            $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();

@@ -5,46 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Note;
-use App\File;
 
 class PostController extends Controller
 {
-    public function index(Request $request)
-    {
-        $posts = Post::join('users', 'users.id', '=', 'posts.user_id')
-            ->select(['posts.*', 'users.name'])
-            ->where('posts.note_id', null)
-            ->orderBy('posts.updated_at', 'desc')
-            ->get();
-
-        foreach ($posts as $post)
-        {
-            $post->count = Note::where('notes.post_id', $post->id)->count();
-        }
-
-        $notes = Note::join('users', 'users.id', '=', 'notes.created_user_id')
-            ->join('posts', 'posts.id', '=', 'notes.post_id')
-            ->select(['notes.*', 'users.name', 'posts.content'])
-            ->orderBy('notes.updated_at', 'desc')
-            ->get();
-
-        foreach ($notes as $note)
-        {
-            $note->count = Post::where('posts.note_id', $note->id)->count();
-        }
-
-        $files = File::join('users', 'users.id', '=', 'files.created_user_id')
-            ->select(['files.*', 'users.name'])
-            ->orderBy('files.updated_at', 'desc')
-            ->get();
-
-        return view('board', [
-            'is_search' => false,
-            'posts' => $posts,
-            'notes' => $notes,
-            'files' => $files,
-        ]);
-    }
 
     public function save(Request $request, $note_id=null)
     {
@@ -62,7 +25,8 @@ class PostController extends Controller
         {
             return redirect('/');
         }
-        else {
+        else
+        {
             $note = Note::select('notes.*')
                 ->where('notes.id', $note_id)
                 ->first();

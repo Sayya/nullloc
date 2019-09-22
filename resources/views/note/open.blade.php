@@ -4,13 +4,9 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-10">
-      @if($is_search)
-        @include('file.make_back')
-      @else
-        @include('note.open_make')
-      @endif
+      @include('note.open_make')
       <div class="card">
-        <div class="card-header">{{ __('かきこみ一覧') }}</div>
+        <div class="card-header">かきこみ一覧</div>
         <div class="card-body">
           投稿日：{{ $post->created_at}}<br>
           投稿者：{{ $post->name }}<br>
@@ -26,7 +22,8 @@
           </div>
           <table class="table">
             <colgroup>
-              <col style="width: 60%;">
+              <col style="width: 45%;">
+              <col style="width: 15%;">
               <col style="width: 15%;">
               <col style="width: 15%;">
               <col style="width: 10%;">
@@ -35,35 +32,10 @@
               <th>かきこみ</th>
               <th>&nbsp;</th>
               <th>&nbsp;</th>
-              <th>&nbsp;</th>
+              <th>コメント</th>
+              <th>ノート</th>
             </thead>
-            <tbody>
-              @foreach ($note_posts as $note_post)
-              <tr>
-                <td>
-                  <div>{{ $note_post->content }}</div>
-                </td>
-                <td>
-                  <div>{{ $note_post->name}}</div>
-                </td>
-                <td>
-                  <div>{{ $note_post->updated_at}}</div>
-                </td>
-                <td>
-                  @if($is_search)
-                  <form action="/search/{{ $note_post->id }}/note" method="GET" class="form-horizontal">
-                  @else
-                  <form action="/{{ $note_post->id }}/note" method="GET" class="form-horizontal">
-                  @endif
-                    @csrf
-                    <div class="form-group">
-                      <button type="submit" class="btn btn-primary">{{ $note_post->count }}</button>
-                    </div>
-                  </form>
-                </td>
-              </tr>
-              @endforeach
-            </tbody>
+            @include('post.list', ['posts' => $note_posts, 'myfiles' => $myfiles])
           </table>
         </div>
       </div>

@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header" data-toggle="collapse" data-target="#makepost" role="button">
-      {{ __('つぶやく') }}
+      つぶやく
   </div>
   <div class="collapse" id="makepost">
     <div class="card-body">
@@ -14,9 +14,7 @@
         </div>
         <div class="form-group">
           <div class="col-md-8">
-            <button type="submit" class="btn btn-primary">
-              {{ __('投稿') }}
-            </button>
+            <button type="submit" class="btn btn-primary">投稿</button>
           </div>
         </div>
       </form>

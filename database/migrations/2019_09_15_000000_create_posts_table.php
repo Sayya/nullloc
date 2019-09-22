@@ -17,7 +17,6 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->string('content');
             $table->tinyInteger('time_range')->unsigned()->default(0);
-            $table->tinyInteger('open_scope')->unsigned()->default(0);
             $table->integer('note_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned();
             $table->timestamps();

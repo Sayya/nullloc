@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="card-header">{{ __('まとめ一覧') }}</div>
+  <div class="card-header">まとめ一覧</div>
   <div class="card-body">
     <table class="table">
       <colgroup>
@@ -12,7 +12,7 @@
         <th>まとめ</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
-        <th>&nbsp;</th>
+        <th>開く</th>
       </thead>
       <tbody>
         @foreach ($files as $file)
@@ -30,7 +30,7 @@
             <form action="/file/{{ $file->id }}" method="GET" class="form-horizontal">
               @csrf
               <div class="form-group">
-                <button type="submit" class="btn btn-primary">{{ __(' ') }}</button>
+                <button type="submit" class="btn btn-primary">x</button>
               </div>
             </form>
           </td>

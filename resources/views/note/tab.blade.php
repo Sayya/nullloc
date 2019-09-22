@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="card-header">{{ __('ノート一覧') }}</div>
+  <div class="card-header">ノート一覧</div>
   <div class="card-body">
     <table class="table">
       <colgroup>
@@ -32,11 +32,7 @@
             <div>{{ $note->updated_at}}</div>
           </td>
           <td>
-            @if($is_search)
-            <form action="/search/{{ $note->post_id }}/note/{{ $note->id }}" method="GET" class="form-horizontal">
-            @else
             <form action="/{{ $note->post_id }}/note/{{ $note->id }}" method="GET" class="form-horizontal">
-            @endif
               @csrf
               <div class="form-group">
                 <button type="submit" class="btn btn-primary">{{ $note->count }}</button>

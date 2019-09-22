@@ -4,15 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class File extends Model
+class Comment extends Model
 {
     public function user()
     {
         return $this->belongsTo('App\User');
     }
 
-    public function comments()
+    public function file()
     {
-        return $this->hasMany('App\Comment');
+        return $this->belongsTo('App\File');
     }
 }
