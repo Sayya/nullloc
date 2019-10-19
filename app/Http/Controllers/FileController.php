@@ -51,10 +51,17 @@ class FileController extends Controller
             ->orderBy('files.updated_at', 'desc')
             ->first();
 
-        $comments = Comment::join('posts', 'posts.id', '=', 'comments.post_id')
-            ->join('users', 'users.id', '=', 'posts.user_id')
-            ->select(['comments.*', 'posts.content as post_content', 'posts.created_at as post_created_at', 'users.name'])
-            ->orderBy('comments.updated_at', 'desc')
+        $comments = Comment::leftJoin('posts', 'posts.id', '=', 'comments.post_id')
+            ->leftJoin('users', 'users.id', '=', 'posts.user_id')
+            ->leftJoin('notes', 'notes.id', '=', 'posts.note_id')
+            ->select(['comments.*', 
+                'posts.content as post_content', 
+                'posts.created_at as post_created_at', 
+                'users.name as user_name', 
+                'notes.title as note_title', 
+                'notes.id as note_id'])
+            ->where('comments.file_id', $file_id)
+            ->orderBy('comments.sort_no', 'asc')
             ->get();
 
         return view('file.open', [
@@ -71,16 +78,72 @@ class FileController extends Controller
             ->orderBy('files.updated_at', 'desc')
             ->first();
 
-        $comments = Comment::join('posts', 'posts.id', '=', 'comments.post_id')
-            ->join('users', 'users.id', '=', 'posts.user_id')
-            ->select(['comments.*', 'posts.content as post_content', 'users.name'])
-            ->orderBy('comments.updated_at', 'desc')
+        $comments = Comment::leftJoin('posts', 'posts.id', '=', 'comments.post_id')
+            ->leftJoin('users', 'users.id', '=', 'posts.user_id')
+            ->leftJoin('notes', 'notes.id', '=', 'posts.note_id')
+            ->select(['comments.*', 
+                'posts.content as post_content', 
+                'posts.created_at as post_created_at', 
+                'users.name as user_name', 
+                'notes.title as note_title', 
+                'notes.id as note_id'])
+            ->where('comments.file_id', $file_id)
+            ->orderBy('comments.sort_no', 'asc')
             ->get();
 
         return view('file.edit', [
-            'files' => $files,
+            'file' => $file,
             'comments' => $comments,
         ]);
+    }
+
+    public function draw(Request $request, $file_id)
+    {
+        return view('file.draw', [
+            'file_id' => $file_id,
+        ]);
+    }
+
+    public function draw_save(Request $request, $file_id)
+    {
+        return view('file.draw', [
+            'file_id' => $file_id,
+        ]);
+    }
+
+    public function pubed(Request $request, $file_id)
+    {
+        $file = File::where('files.id', $file_id)
+            ->orderBy('files.updated_at', 'desc')
+            ->first();
+        $file->open_scope = 1;
+        $file->save();
+        return redirect('/file/'.$file_id);
+    }
+
+    public function update(Request $request, $file_id)
+    {
+        $validator = $request->validate([
+        ]);
+
+        $comments = Comment::where('comments.file_id', $file_id)
+            ->get();
+
+        foreach ($comments as $comment)
+        {
+            if (! empty($request["comment".$comment->id]))
+            {
+                $comment->content = $request["comment".$comment->id];
+                $comment->sort_no = $request["sort".$comment->id];
+                $comment->save();
+            }
+            else
+            {
+                $comment->delete();
+            }
+        }
+
+        return redirect('/file/'.$file_id);
     }
 
     public function del(Request $request, $file_id)

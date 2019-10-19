@@ -26,8 +26,22 @@ class CommentController extends Controller
             $comment->content = $request->content;
         }
         $comment->file_id = $request->file_id;
-        $comment->post_id = $post_id;
+        if ($post_id !== "nopost")
+        {
+            $comment->post_id = $post_id;
+        }
         $comment->user_id = $request->user()->id;
+        $sort_no = Comment::where('comments.file_id', $request->file_id)
+            ->where('comments.user_id', $request->user()->id)
+            ->max('comments.sort_no') + 1;
+        if (is_null($sort_no))
+        {
+            $comment->sort_no = 1;
+        }
+        else
+        {
+            $comment->sort_no = $sort_no;
+        }
         $comment->save();
 
         return redirect()->back();

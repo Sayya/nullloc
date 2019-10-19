@@ -13,7 +13,7 @@
           <label>まとめ先</label>
           <div class="form-group">
             <select class="form-control" name="file_id" id="file_id">
-              @foreach($myfiles as $myfile)
+              @foreach ($myfiles as $myfile)
               <option value="{{ $myfile->id }}">{{ $myfile->title }}</option>
               @endforeach
             </select>

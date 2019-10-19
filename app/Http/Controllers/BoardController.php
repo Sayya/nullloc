@@ -41,7 +41,6 @@ class BoardController extends Controller
             ->get();
 
         $myfiles = File::select(['files.*'])
-            ->where('files.open_scope', 0)
             ->where('files.created_user_id', $request->user()->id)
             ->orderBy('files.updated_at', 'desc')
             ->get();

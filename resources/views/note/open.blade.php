@@ -1,23 +1,23 @@
-@extends('layouts.app')
+@extends ('layouts.app')
 
-@section('content')
+@section ('content')
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-10">
-      @include('note.open_make')
+      @include ('note.open_make')
       <div class="card">
         <div class="card-header">かきこみ一覧</div>
         <div class="card-body">
-          投稿日：{{ $post->created_at}}<br>
+          投稿日：{{ $post->created_at }}<br>
           投稿者：{{ $post->name }}<br>
           <blockquote class="blockquote text-center">
             <p>{{ $post->content }}</p>
           </blockquote>
           <div class="card card-body bg-light">
-            投稿日：{{ $note->created_at}}<br>
-            投稿者：{{ $note->name}}<br>
+            投稿日：{{ $note->created_at }}<br>
+            投稿者：{{ $note->name }}<br>
             <blockquote class="blockquote text-center">
-              <p>{{ $note->title}}</p>
+              <p>{{ $note->title }}</p>
             </blockquote>
           </div>
           <table class="table">
@@ -35,8 +35,11 @@
               <th>コメント</th>
               <th>ノート</th>
             </thead>
-            @include('post.list', ['posts' => $note_posts, 'myfiles' => $myfiles])
+            @include ('post.list', ['posts' => $note_posts, 'myfiles' => $myfiles])
           </table>
+          @foreach ($note_posts as $note_post)
+            @include ('file.modal', ['post' => $note_post, 'myfiles' => $myfiles])
+          @endforeach
         </div>
       </div>
     </div>

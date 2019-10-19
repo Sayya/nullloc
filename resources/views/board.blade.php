@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends ('layouts.app')
 
-@section('content')
+@section ('content')
 <div class="container">
   <div class="row justify-content-center">
     <ul class="nav nav-tabs">
@@ -13,23 +13,23 @@
     <div class="tab-pane active" id="tab1">
       <div class="row justify-content-center">
         <div class="col-md-10">
-          @include('post.tab_make')
-          @include('post.tab', ['posts' => $posts])
+          @include ('post.tab_make')
+          @include ('post.tab', ['posts' => $posts])
         </div>
       </div>
     </div>
     <div class="tab-pane" id="tab2">
       <div class="row justify-content-center">
         <div class="col-md-10">
-          @include('note.tab', ['notes' => $notes])
+          @include ('note.tab', ['notes' => $notes])
         </div>
       </div>
     </div>
     <div class="tab-pane" id="tab3">
       <div class="row justify-content-center">
         <div class="col-md-10">
-          @include('file.tab_make')
-          @include('file.tab', ['files' => $files])
+          @include ('file.tab_make')
+          @include ('file.tab', ['files' => $files])
         </div>
       </div>
     </div>

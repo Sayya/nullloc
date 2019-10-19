@@ -16,10 +16,10 @@
         <th>コメント</th>
         <th>ノート</th>
       </thead>
-      @include('post.list', ['posts' => $posts, 'myfiles' => $myfiles])
+      @include ('post.list', ['posts' => $posts, 'myfiles' => $myfiles])
     </table>
     @foreach ($posts as $post)
-      @include('post.tab_modal', ['post' => $post, 'myfiles' => $myfiles])
+      @include ('file.modal', ['post' => $post, 'myfiles' => $myfiles])
     @endforeach
   </div>
 </div>

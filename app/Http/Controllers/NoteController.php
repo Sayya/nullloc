@@ -74,7 +74,6 @@ class NoteController extends Controller
 
         $myfiles = File::join('users', 'users.id', '=', 'files.created_user_id')
             ->select(['files.*', 'users.name'])
-            ->where('files.open_scope', 0)
             ->where('files.created_user_id', $request->user()->id)
             ->orderBy('files.updated_at', 'desc')
             ->get();

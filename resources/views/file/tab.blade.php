@@ -18,17 +18,16 @@
         @foreach ($files as $file)
         <tr>
           <td>
-            <div>{{ $file->title}}</div>
+            <div>{{ $file->title }}</div>
           </td>
           <td>
-            <div>{{ $file->name}}</div>
+            <div>{{ $file->name }}</div>
           </td>
           <td>
-            <div>{{ $file->updated_at}}</div>
+            <div>{{ $file->updated_at }}</div>
           </td>
           <td>
             <form action="/file/{{ $file->id }}" method="GET" class="form-horizontal">
-              @csrf
               <div class="form-group">
                 <button type="submit" class="btn btn-primary">x</button>
               </div>

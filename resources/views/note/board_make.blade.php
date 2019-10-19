@@ -4,7 +4,7 @@
   </div>
   <div class="collapse" id="makenote">
     <div class="card-body">
-      @include('common.errors')
+      @include ('common.errors')
       <form action="/{{ $post->id }}/note/save" method="POST" class="form-horizontal">
         @csrf
         <div class="form-group">

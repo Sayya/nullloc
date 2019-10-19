@@ -20,20 +20,19 @@
         @foreach ($notes as $note)
         <tr>
           <td>
-            <div>{{ $note->content}}</div>
+            <div>{{ $note->content }}</div>
           </td>
           <td>
-            <div>{{ $note->title}}</div>
+            <div>{{ $note->title }}</div>
           </td>
           <td>
-            <div>{{ $note->name}}</div>
+            <div>{{ $note->name }}</div>
           </td>
           <td>
-            <div>{{ $note->updated_at}}</div>
+            <div>{{ $note->updated_at }}</div>
           </td>
           <td>
             <form action="/{{ $note->post_id }}/note/{{ $note->id }}" method="GET" class="form-horizontal">
-              @csrf
               <div class="form-group">
                 <button type="submit" class="btn btn-primary">{{ $note->count }}</button>
               </div>
