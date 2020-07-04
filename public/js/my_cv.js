@@ -115,7 +115,6 @@ function onDoubleClick(e) {
     for (i = 0; i < drawings.length; i++) {
         if (doDrag(reversed_drawings[i])) {
             pointed_obj = new CVLinObj(ctx);
-            console.log(pointed_obj);
             pointed_obj.start_obj = drawings[drawings.length-(i+1)];
             break;
         }
@@ -176,7 +175,13 @@ function ctob () {
         buf[i] = cvPNG.charCodeAt(i);
     }
     cvBlob = new Blob([buf], { type: 'image/png' });
-    file = new File([cvBlob], 'image.png', { type: 'image/png' });
+    //file = new File([cvBlob], 'image.png', { type: 'image/png' });
+    let fd = new FormData();
+    fd.append('file', cvBlob);
+
+    $.ajax({
+        url: "http://localhost"
+    });
 }
 
 cv.addEventListener('mousedown', onMouseDown, false);

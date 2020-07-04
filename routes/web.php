@@ -42,4 +42,4 @@ Route::delete('/post/{id}', function ($id) {
 */
 
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/{path?}', 'HomeController@index')->where('path', '.*');
